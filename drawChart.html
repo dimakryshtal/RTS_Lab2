@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>  
+	<script>
+window.onload = function () {
+
+const signal = getSignal()
+const discrFour = discreteFourier(signal)
+const fastFour = fastFourier(signal)
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light1",
+	
+	data: [{        
+		type: "line",
+      	indexLabelFontSize: 16,
+		dataPoints: signal
+	}]
+});
+var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	theme: "light1",
+	
+	data: [{        
+		type: "line",
+      	indexLabelFontSize: 16,
+		dataPoints: discrFour
+	}]
+});
+var chart3 = new CanvasJS.Chart("chartContainer3", {
+	animationEnabled: true,
+	theme: "light1",
+	
+	data: [{        
+		type: "line",
+      	indexLabelFontSize: 16,
+		dataPoints: fastFour
+	}]
+});
+
+
+chart.render();
+chart2.render();
+chart3.render();
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 80%;"></div>
+<div id="chartContainer2" style="height: 300px; width: 80%;"></div>
+<div id="chartContainer3" style="height: 300px; width: 80%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="signalGenerator.js"></script>
+</body>
+</html>
