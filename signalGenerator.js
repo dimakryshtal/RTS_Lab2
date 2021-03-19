@@ -1,6 +1,8 @@
 const n = 6
 const w = 2100
-const N = 1024
+const N = 2048
+
+
 
 const getSignal = () => { 
     const x = []
@@ -25,6 +27,7 @@ const complexNumber = () => {
     return {real:0, im: 0}
 }
 
+
 const discreteFourier = (signals) => {
     const result = []
     const start = Date.now()
@@ -37,6 +40,7 @@ const discreteFourier = (signals) => {
         result.push({y: Math.sqrt(Math.pow(num.im, 2) + Math.pow(num.real, 2))})
     }
     const end = Date.now()
+    //console.log(result)
     console.log(`Discrete fourier: ${end - start}`)
     return result
 }    
@@ -59,7 +63,34 @@ const fastFourier = (signal) => {
     }
     const end = Date.now()
     console.log(`Fast Fourier: ${end - start}`)
+    console.log(result)
     return result
 }
 
+//ADDITIONAL TASK
+const discreteFourierTable = (signals) => {
+    const result = []
+    const start = Date.now()
+    let table = []
+    for(let i = 0; i < N; i++) {
+        table.push({cos: Math.cos(2*Math.PI * i/N), sin: Math.sin(2*Math.PI * i/N)})
+    }
+
+    for (let p = 0; p < N; p++) {
+        let num = complexNumber()
+        for(let k = 0; k < N; k++) {
+
+            num.real += signals[k].y * table[p*k % N].cos
+            num.im -= signals[k].y * table[p*k % N].sin 
+        }
+        result.push({y: Math.sqrt(Math.pow(num.im, 2) + Math.pow(num.real, 2))})
+    }
+    const end = Date.now()
+   console.log(`Discrete fourier table: ${end - start}`)
+   //console.log(result)
+    return result
+}
+const signal = getSignal()
+discreteFourier(signal)
+discreteFourierTable(signal)
 
